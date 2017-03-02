@@ -1,6 +1,8 @@
 sh2proxy
 ========
 
+**sh2proxy is no longer under active development, I recommend you use ThirteenAG and Aero_'s Widescreen Fixes Pack instead (which includes the fixes from sh2proxy along with some others) as it's more actively supported:** https://thirteenag.github.io/wfp#sh2
+
 A simple D3D8 wrapper and SH2 (Directors Cut) patcher, with source code included.
 
 Thanks to Michael Koch for his open source DX8 wrapper
@@ -87,6 +89,15 @@ Fixes:
 
 All of the above can be configured in sh2proxy.ini
 
+OS X Support
+-------
+OS X does not export any API for reliably controlling thread affinity. Nevertheless, there is a workaround:
+1. Build and install [ThreadBinder](https://github.com/07151129/ThreadBinder) kernel extension.
+2. Patch wine using `wine_osx_affinity.patch`. It was tested with version 1.9.11, but should work with any reasonable modern one.
+
+After this, the game's threads should be bound to a single processor. You can observe the result by looking at wine's CPU usage:
+it should never exceed 100%.
+
 Example INI
 -------
 <pre>
@@ -103,6 +114,9 @@ Windowed = 1
 # borderless windows can't be moved normally, so set the position below
 # (default 0)
 Borderless = 1
+
+# Force borderless even on fullscreen (Windows 10 Fix)
+ForceBorderless = 1
 
 # works with bordered windows too
 # (default 0)
